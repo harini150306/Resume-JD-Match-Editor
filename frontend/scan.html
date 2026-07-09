@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resume · JD Match Scanner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<link rel="stylesheet" href="scan-styles.css">
+</head>
+<body>
+
+<div class="scan-bg" aria-hidden="true"></div>
+
+<header class="app-topbar">
+  <a href="dashboard.html" class="app-brand">
+    <span class="app-brand-mark">◎</span>
+    <span>MATCH<span class="app-brand-accent">SCAN</span></span>
+  </a>
+  <nav class="app-nav">
+    <a href="dashboard.html" class="app-nav-link"><span class="full-label">Home</span></a>
+    <a href="scan.html" class="app-nav-link active"><span class="full-label">Scan</span></a>
+  </nav>
+  <div class="app-user-menu">
+    <span class="app-user-name" data-user-name></span>
+    <button class="app-logout-btn" id="logoutBtn">Log out</button>
+  </div>
+</header>
+
+<main>
+
+  <!-- INPUT STAGE -->
+  <section class="intake" id="intakeStage">
+    <div class="intake-grid">
+
+      <!-- RESUME PANEL -->
+      <div class="doc-panel" id="resumePanel">
+        <div class="doc-panel-head">
+          <span class="doc-index">A</span>
+          <div>
+            <h2>Resume</h2>
+            <p>What you bring</p>
+          </div>
+        </div>
+
+        <div class="doc-tabs">
+          <button class="doc-tab active" data-target="resumeUpload" data-panel="resume">Upload file</button>
+          <button class="doc-tab" data-target="resumePaste" data-panel="resume">Paste text</button>
+        </div>
+
+        <div class="doc-input active" id="resumeUpload">
+          <label class="dropzone" for="resumeFileInput" id="resumeDropzone">
+            <span class="dz-icon">⇪</span>
+            <span class="dz-label">Drop your resume here</span>
+            <span class="dz-sub">PDF, DOCX or TXT · click to browse</span>
+            <input type="file" id="resumeFileInput" accept=".pdf,.docx,.txt" hidden>
+          </label>
+          <div class="file-chip" id="resumeFileChip" hidden>
+            <span class="file-chip-name" id="resumeFileName"></span>
+            <button class="file-chip-clear" id="resumeFileClear" aria-label="Remove file">✕</button>
+          </div>
+        </div>
+
+        <div class="doc-input" id="resumePaste">
+          <textarea id="resumeTextArea" placeholder="Paste your resume text here…"></textarea>
+        </div>
+
+        <p class="doc-status" id="resumeStatus"></p>
+      </div>
+
+      <!-- SCAN DIVIDER -->
+      <div class="scan-divider" aria-hidden="true">
+        <div class="scan-line"></div>
+      </div>
+
+      <!-- JD PANEL -->
+      <div class="doc-panel" id="jdPanel">
+        <div class="doc-panel-head">
+          <span class="doc-index">B</span>
+          <div>
+            <h2>Job Description</h2>
+            <p>What the role wants</p>
+          </div>
+        </div>
+
+        <div class="doc-tabs">
+          <button class="doc-tab active" data-target="jdPaste" data-panel="jd">Paste text</button>
+          <button class="doc-tab" data-target="jdUpload" data-panel="jd">Upload file</button>
+        </div>
+
+        <div class="doc-input active" id="jdPaste">
+          <textarea id="jdTextArea" placeholder="Paste the job description here…"></textarea>
+        </div>
+
+        <div class="doc-input" id="jdUpload">
+          <label class="dropzone" for="jdFileInput" id="jdDropzone">
+            <span class="dz-icon">⇪</span>
+            <span class="dz-label">Drop the JD file here</span>
+            <span class="dz-sub">PDF, DOCX or TXT · click to browse</span>
+            <input type="file" id="jdFileInput" accept=".pdf,.docx,.txt" hidden>
+          </label>
+          <div class="file-chip" id="jdFileChip" hidden>
+            <span class="file-chip-name" id="jdFileName"></span>
+            <button class="file-chip-clear" id="jdFileClear" aria-label="Remove file">✕</button>
+          </div>
+        </div>
+
+        <p class="doc-status" id="jdStatus"></p>
+      </div>
+
+    </div>
+
+    <div class="intake-action">
+      <button class="scan-btn" id="scanBtn">
+        <span class="scan-btn-label">Run compatibility scan</span>
+        <span class="scan-btn-icon">↝</span>
+      </button>
+      <p class="intake-error" id="intakeError" hidden></p>
+    </div>
+  </section>
+
+  <!-- RESULTS STAGE -->
+  <section class="results" id="resultsStage" hidden>
+
+    <div class="results-top">
+      <div class="gauge-wrap">
+        <svg class="gauge" viewBox="0 0 220 220">
+          <circle class="gauge-track" cx="110" cy="110" r="92"></circle>
+          <circle class="gauge-arc" id="gaugeArc" cx="110" cy="110" r="92"></circle>
+        </svg>
+        <div class="gauge-center">
+          <span class="gauge-number" id="gaugeNumber">0</span>
+          <span class="gauge-percent">%</span>
+          <span class="gauge-caption">match</span>
+        </div>
+      </div>
+
+      <div class="sub-scores">
+        <div class="sub-score">
+          <span class="sub-score-label">Keyword overlap</span>
+          <div class="sub-score-bar"><div class="sub-score-fill" id="keywordFill"></div></div>
+          <span class="sub-score-value" id="keywordValue">0%</span>
+        </div>
+        <div class="sub-score">
+          <span class="sub-score-label">Semantic similarity</span>
+          <div class="sub-score-bar"><div class="sub-score-fill" id="semanticFill"></div></div>
+          <span class="sub-score-value" id="semanticValue">0%</span>
+        </div>
+        <div class="sub-score-counts">
+          <span><strong id="resumeSkillCount">0</strong> skills found in your resume</span>
+          <span><strong id="jdSkillCount">0</strong> skills required by the JD</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="results-body">
+
+      <div class="skills-col">
+        <h3 class="skills-col-title matched-title">Matched skills</h3>
+        <div class="chip-row" id="matchedChips"></div>
+      </div>
+
+      <div class="skills-col">
+        <h3 class="skills-col-title missing-title">Missing skills &amp; what to learn</h3>
+        <div class="gap-list" id="gapList"></div>
+      </div>
+
+    </div>
+
+    <div class="editor-block">
+      <div class="editor-head">
+        <div>
+          <h3>Edit your resume</h3>
+          <p>Address the gaps above, then re-scan to see your score update.</p>
+        </div>
+        <button class="rescan-btn" id="rescanBtn">Recalculate score</button>
+      </div>
+      <textarea id="editorTextArea"></textarea>
+    </div>
+
+    <button class="start-over-btn" id="startOverBtn">← Start a new scan</button>
+
+  </section>
+
+</main>
+
+<script src="auth.js"></script>
+<script>
+  requireAuth();
+  fillUserDisplays();
+  wireLogoutButton();
+</script>
+<script src="scan-app.js"></script>
+</body>
+</html>

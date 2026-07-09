@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MatchScan — Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 56px 24px 80px;
+  }
+
+  .hero {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 44px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: -60%;
+    right: -10%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(232,169,58,0.12), transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin: 0 0 10px;
+  }
+
+  .hero h1 {
+    font-family: var(--display);
+    font-size: 30px;
+    font-weight: 600;
+    margin: 0 0 12px;
+    line-height: 1.25;
+  }
+
+  .hero p {
+    color: var(--text-dim);
+    font-size: 14.5px;
+    line-height: 1.6;
+    max-width: 480px;
+    margin: 0 0 26px;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--amber);
+    color: #1A1305;
+    text-decoration: none;
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 14.5px;
+    padding: 13px 24px;
+    border-radius: 10px;
+    transition: transform 0.12s, box-shadow 0.12s;
+  }
+
+  .hero-cta:hover { transform: translateY(-1px); box-shadow: 0 6px 20px -4px rgba(232, 169, 58, 0.5); }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 32px;
+  }
+
+  .step-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px;
+  }
+
+  .step-index {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--amber);
+    border: 1px solid var(--amber-dim);
+    background: rgba(232, 169, 58, 0.08);
+    width: 26px;
+    height: 26px;
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+  }
+
+  .step-card h3 {
+    font-family: var(--display);
+    font-size: 14.5px;
+    margin: 0 0 6px;
+  }
+
+  .step-card p {
+    font-size: 12.5px;
+    color: var(--text-dim);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  .recent-section {
+    margin-top: 32px;
+  }
+
+  .recent-section h2 {
+    font-family: var(--display);
+    font-size: 16px;
+    margin: 0 0 14px;
+  }
+
+  .empty-state {
+    background: var(--panel);
+    border: 1px dashed var(--border);
+    border-radius: 14px;
+    padding: 32px;
+    text-align: center;
+    color: var(--text-faint);
+    font-size: 13px;
+  }
+
+  @media (max-width: 700px) {
+    .steps { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="scan-bg" aria-hidden="true"></div>
+
+<header class="app-topbar">
+  <a href="dashboard.html" class="app-brand">
+    <span class="app-brand-mark">◎</span>
+    <span>MATCH<span class="app-brand-accent">SCAN</span></span>
+  </a>
+  <nav class="app-nav">
+    <a href="dashboard.html" class="app-nav-link active"><span class="full-label">Home</span></a>
+    <a href="scan.html" class="app-nav-link"><span class="full-label">Scan</span></a>
+  </nav>
+  <div class="app-user-menu">
+    <span class="app-user-name" data-user-name></span>
+    <button class="app-logout-btn" id="logoutBtn">Log out</button>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <p class="hero-eyebrow">Welcome back</p>
+    <h1 data-welcome-heading>Ready to check your next job match?</h1>
+    <p>Upload your resume and a job description, and MatchScan will score your compatibility, show exactly which skills are missing, and tell you what to learn to close the gap — then let you edit your resume right there and re-check.</p>
+    <a href="scan.html" class="hero-cta">
+      Start a new scan <span>↝</span>
+    </a>
+  </section>
+
+  <div class="steps">
+    <div class="step-card">
+      <div class="step-index">1</div>
+      <h3>Upload both documents</h3>
+      <p>Drop in your resume (PDF/DOCX) and paste or upload the job description.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-index">2</div>
+      <h3>Get your match score</h3>
+      <p>See a compatibility score plus exactly which required skills you're missing.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-index">3</div>
+      <h3>Edit and re-check</h3>
+      <p>Update your resume text right on the page and instantly see your score improve.</p>
+    </div>
+  </div>
+
+  <div class="recent-section">
+    <h2>Recent scans</h2>
+    <div class="empty-state">
+      No scans yet — run your first one to see it here.
+    </div>
+  </div>
+</main>
+
+<script src="auth.js"></script>
+<script>
+  requireAuth();
+  fillUserDisplays();
+  wireLogoutButton();
+
+  document.querySelector("[data-welcome-heading]").textContent =
+    `Welcome back, ${getDisplayName().split(" ")[0] || "there"}`;
+</script>
+</body>
+</html>

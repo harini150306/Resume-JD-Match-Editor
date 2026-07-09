@@ -1,0 +1,135 @@
+/* ===========================================================
+   MatchScan — shared design tokens + app shell
+   Used by every page (login, dashboard, scan) for consistency.
+   =========================================================== */
+
+:root {
+  --bg: #12161F;
+  --panel: #1B212C;
+  --panel-raised: #212836;
+  --border: #2C3444;
+  --text: #EDEFF3;
+  --text-dim: #8B93A3;
+  --text-faint: #5B6478;
+  --amber: #E8A93A;
+  --amber-dim: #6B5227;
+  --green: #4CAF7D;
+  --green-dim: #22392E;
+  --coral: #E85D4C;
+  --coral-dim: #3D2622;
+
+  --display: 'Space Grotesk', sans-serif;
+  --body: 'Inter', sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+}
+
+* { box-sizing: border-box; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--body);
+  min-height: 100vh;
+}
+
+.scan-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse 900px 500px at 50% -10%, rgba(232, 169, 58, 0.08), transparent 60%),
+    repeating-linear-gradient(180deg, rgba(255,255,255,0.012) 0px, rgba(255,255,255,0.012) 1px, transparent 1px, transparent 3px);
+}
+
+button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+}
+
+/* ---------- App shell topbar (dashboard + scan pages) ---------- */
+
+.app-topbar {
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 68px;
+}
+
+.app-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  color: var(--text);
+}
+
+.app-brand-mark { color: var(--amber); font-size: 17px; }
+.app-brand-accent { color: var(--amber); }
+
+.app-nav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.app-nav-link {
+  font-family: var(--body);
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--text-dim);
+  text-decoration: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.app-nav-link:hover { color: var(--text); background: var(--panel-raised); }
+.app-nav-link.active { color: var(--amber); background: rgba(232, 169, 58, 0.08); }
+
+.app-user-menu {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.app-user-name {
+  font-size: 13px;
+  color: var(--text-dim);
+  font-family: var(--mono);
+}
+
+.app-logout-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  font-family: var(--body);
+  font-size: 12.5px;
+  font-weight: 500;
+  padding: 7px 14px;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.app-logout-btn:hover { border-color: var(--coral); color: var(--coral); }
+
+@media (max-width: 640px) {
+  .app-nav-link span.full-label { display: none; }
+  .app-user-name { display: none; }
+}

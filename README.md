@@ -175,12 +175,4 @@ http://127.0.0.1:8000/docs
 
 ---
 
-## Author
 
-**Harini H**
-
-Final Year B.E. Computer Science Engineering Student
-
-KGiSL Institute of Technology
-
-GitHub: https://github.com/harini150306
